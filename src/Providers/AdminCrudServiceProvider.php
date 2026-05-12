@@ -105,7 +105,7 @@ final class AdminCrudServiceProvider extends ServiceProvider
     /**
      * @param array<string, mixed> $resource
      */
-    private function renderIndex(array $resource): null
+    private function renderIndex(array $resource): void
     {
         $repository = $this->repository($resource);
         $page = max(1, (int) ($_GET['paged'] ?? 1));
@@ -130,13 +130,13 @@ final class AdminCrudServiceProvider extends ServiceProvider
             'adminForm' => $this->container->get(AdminForm::class),
         ]);
 
-        return null;
+        return;
     }
 
     /**
      * @param array<string, mixed> $resource
      */
-    private function renderForm(array $resource, ?WP_Post $post): null
+    private function renderForm(array $resource, ?WP_Post $post): void
     {
         if ($post === null && ($error = $this->authorize($resource, 'create')) instanceof WP_Error) {
             wp_die(esc_html($this->errorMessage($error)));
@@ -165,13 +165,13 @@ final class AdminCrudServiceProvider extends ServiceProvider
             'adminForm' => $this->adminForm(),
         ]);
 
-        return null;
+        return;
     }
 
     /**
      * @param array<string, mixed> $resource
      */
-    private function handleStore(array $resource): null
+    private function handleStore(array $resource): void
     {
         $this->ensureCapability($resource);
         $slug = sanitize_key((string) $resource['slug']);
@@ -187,19 +187,19 @@ final class AdminCrudServiceProvider extends ServiceProvider
             $payload = $this->payload($resource, $source);
         } catch (ValidationException $e) {
             $this->redirectValidation($resource, $e, $source, ['action' => 'create']);
-            return null;
+            return;
         }
 
         $post = $this->repository($resource)->create($payload);
         $this->redirect($resource, ['message' => 'created', 'id' => (string) $post->ID]);
 
-        return null;
+        return;
     }
 
     /**
      * @param array<string, mixed> $resource
      */
-    private function handleUpdate(array $resource): null
+    private function handleUpdate(array $resource): void
     {
         $this->ensureCapability($resource);
         $source = $this->post();
@@ -223,19 +223,19 @@ final class AdminCrudServiceProvider extends ServiceProvider
                 'action' => 'edit',
                 'id' => (string) $post->ID,
             ]);
-            return null;
+            return;
         }
 
         $this->repository($resource)->update($post, $payload);
         $this->redirect($resource, ['message' => 'updated', 'id' => (string) $post->ID]);
 
-        return null;
+        return;
     }
 
     /**
      * @param array<string, mixed> $resource
      */
-    private function handleDelete(array $resource): null
+    private function handleDelete(array $resource): void
     {
         $this->ensureCapability($resource);
         $source = $this->post();
@@ -255,13 +255,13 @@ final class AdminCrudServiceProvider extends ServiceProvider
         $this->repository($resource)->delete($post, (bool) ($resource['force_delete'] ?? false));
         $this->redirect($resource, ['message' => 'deleted']);
 
-        return null;
+        return;
     }
 
     /**
      * @param array<string, mixed> $resource
      */
-    private function handleBulk(array $resource): null
+    private function handleBulk(array $resource): void
     {
         $this->ensureCapability($resource);
         $source = $this->post();
@@ -272,7 +272,7 @@ final class AdminCrudServiceProvider extends ServiceProvider
 
         if ($singleDeleteId <= 0 && ($source['bulk_action'] ?? '') !== 'delete') {
             $this->redirect($resource, ['message' => 'no_action']);
-            return null;
+            return;
         }
 
         $ids = $singleDeleteId > 0 ? [$singleDeleteId] : array_map('intval', (array) ($source['ids'] ?? []));
@@ -297,7 +297,7 @@ final class AdminCrudServiceProvider extends ServiceProvider
 
         $this->redirect($resource, ['message' => 'bulk_deleted', 'deleted' => (string) $deleted]);
 
-        return null;
+        return;
     }
 
     /**
