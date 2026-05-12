@@ -1,0 +1,23 @@
+{
+  "name": "yaml-ns/product-catalog-plugin",
+  "description": "Example product catalog plugin consuming WPP Framework.",
+  "type": "wordpress-plugin",
+  "autoload": {
+    "psr-4": {
+      "ProductCatalogPlugin\\": "app/"
+    }
+  },
+  "require": {
+    "php": ">=8.1",
+    "yaml-ns/wpp-framework": "*"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
+}

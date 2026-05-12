@@ -1,0 +1,2 @@
+<?php
+// Fixture path only.

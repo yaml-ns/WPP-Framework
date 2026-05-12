@@ -1,0 +1,16 @@
+stages:
+  - test
+
+phpunit:
+  stage: test
+  image: composer:2
+  cache:
+    key: composer-${CI_COMMIT_REF_SLUG}
+    paths:
+      - .composer-cache/
+  variables:
+    COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.composer-cache"
+  script:
+    - composer validate --strict
+    - composer install --no-interaction --no-progress --prefer-dist
+    - vendor/bin/phpunit
