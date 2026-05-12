@@ -1,5 +1,7 @@
 # WPP Framework
 
+[![CI](https://github.com/yaml-ns/WPP-Framework/actions/workflows/tests.yml/badge.svg)](https://github.com/yaml-ns/WPP-Framework/actions/workflows/tests.yml)
+
 Reusable PHP framework for building application-style WordPress plugins: REST APIs, admin screens, business services, assets, cron, permissions, modules and PHP views.
 
 License: MIT.
