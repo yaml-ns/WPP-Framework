@@ -642,6 +642,17 @@ Docker:
 docker compose run --rm tests
 ```
 
+Quality checks:
+
+```bash
+composer cs:check
+composer cs:fix
+composer analyse
+composer test
+composer check:composer
+composer ci
+```
+
 CI definitions are provided for GitHub Actions and GitLab CI:
 
 ```txt
@@ -649,7 +660,7 @@ CI definitions are provided for GitHub Actions and GitLab CI:
 .gitlab-ci.yml
 ```
 
-Pipelines run `composer validate --strict`, `composer install` and `vendor/bin/phpunit`.
+Pipelines run Composer validation, PHP CS Fixer, PHPStan and PHPUnit.
 
 ## Releases
 

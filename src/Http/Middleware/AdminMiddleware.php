@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Middleware;
 
-use YamlNs\WppFramework\Contracts\Middleware;
 use WP_Error;
 use WP_REST_Request;
+use YamlNs\WppFramework\Contracts\Middleware;
 
 final class AdminMiddleware implements Middleware
 {

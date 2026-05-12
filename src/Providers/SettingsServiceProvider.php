@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -26,7 +27,7 @@ final class SettingsServiceProvider extends ServiceProvider
                 register_setting(
                     (string) $setting['option_group'],
                     (string) $setting['option_name'],
-                    $setting['args'] ?? []
+                    $setting['args'] ?? [],
                 );
             }
 
@@ -36,7 +37,7 @@ final class SettingsServiceProvider extends ServiceProvider
                     (string) $section['title'],
                     isset($section['callback']) ? $this->resolveCallback($section['callback']) : '__return_null',
                     (string) $section['page'],
-                    $section['args'] ?? []
+                    $section['args'] ?? [],
                 );
             }
 
@@ -47,7 +48,7 @@ final class SettingsServiceProvider extends ServiceProvider
                     $this->resolveCallback($field['callback']),
                     (string) $field['page'],
                     $field['section'] ?? 'default',
-                    $field['args'] ?? []
+                    $field['args'] ?? [],
                 );
             }
         });

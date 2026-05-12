@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Tests\Support;
@@ -17,7 +18,7 @@ final class LoggerTest extends TestCase
             LogLevel::WARNING,
             static function (string $line) use (&$lines): void {
                 $lines[] = $line;
-            }
+            },
         );
 
         $logger->info('Ignored');

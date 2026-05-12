@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -20,8 +21,8 @@ final class RestServiceProvider extends ServiceProvider
             HealthController::class,
             fn () => new HealthController(
                 $this->container->get(RestRouter::class),
-                $this->container->get(PluginContext::class)
-            )
+                $this->container->get(PluginContext::class),
+            ),
         );
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Core;
@@ -14,7 +15,8 @@ final class PluginContext
         private readonly string $version,
         private readonly string $textDomain,
         private readonly string $restNamespace,
-    ) {}
+    ) {
+    }
 
     /**
      * @param array{

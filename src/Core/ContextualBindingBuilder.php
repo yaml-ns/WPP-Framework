@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Core;
@@ -9,8 +10,9 @@ final class ContextualBindingBuilder
 
     public function __construct(
         private readonly Container $container,
-        private readonly string $concrete
-    ) {}
+        private readonly string $concrete,
+    ) {
+    }
 
     public function needs(string $abstract): self
     {

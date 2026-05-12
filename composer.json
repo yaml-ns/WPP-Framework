@@ -20,14 +20,26 @@
   "bin": [
     "bin/wpp"
   ],
+  "config": {
+    "platform": {
+      "php": "8.1.0"
+    }
+  },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.68 <3.95",
+    "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^10.0"
   },
   "scripts": {
-    "validate": "composer validate --strict",
+    "check:composer": "composer validate --strict",
+    "analyse": "phpstan analyse",
+    "cs:check": "php-cs-fixer fix --dry-run --diff",
+    "cs:fix": "php-cs-fixer fix",
     "test": "phpunit",
     "ci": [
-      "@validate",
+      "@check:composer",
+      "@cs:check",
+      "@analyse",
       "@test"
     ],
     "dump": "composer dump-autoload"

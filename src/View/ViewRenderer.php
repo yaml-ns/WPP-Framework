@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\View;
@@ -21,7 +22,9 @@ final class ViewRenderer
 
     private ?string $layout = null;
 
-    public function __construct(private readonly PluginContext $context) {}
+    public function __construct(private readonly PluginContext $context)
+    {
+    }
 
     /**
      * @param array<string, mixed> $data

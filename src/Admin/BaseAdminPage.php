@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Admin;
@@ -7,7 +8,9 @@ use YamlNs\WppFramework\Core\PluginContext;
 
 abstract class BaseAdminPage
 {
-    public function __construct(protected PluginContext $context) {}
+    public function __construct(protected PluginContext $context)
+    {
+    }
 
     abstract public function register(): void;
 

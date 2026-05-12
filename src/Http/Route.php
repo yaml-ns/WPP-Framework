@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http;
@@ -17,5 +18,6 @@ final class Route
         public readonly mixed $handler,
         public readonly array $middleware = [],
         public readonly array $args = [],
-    ) {}
+    ) {
+    }
 }

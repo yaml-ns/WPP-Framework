@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
 
-use YamlNs\WppFramework\Core\Container;
-use YamlNs\WppFramework\Core\PluginContext;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
+use YamlNs\WppFramework\Core\Container;
+use YamlNs\WppFramework\Core\PluginContext;
 use YamlNs\WppFramework\Support\Logger;
 
 final class LoggerServiceProvider extends ServiceProvider
@@ -35,13 +36,13 @@ final class LoggerServiceProvider extends ServiceProvider
             fn () => new Logger(
                 $this->container->get(PluginContext::class),
                 true,
-                (string) ($this->logger['min_level'] ?? LogLevel::DEBUG)
-            )
+                (string) ($this->logger['min_level'] ?? LogLevel::DEBUG),
+            ),
         );
 
         $this->container->singleton(
             LoggerInterface::class,
-            fn () => $this->container->get(Logger::class)
+            fn () => $this->container->get(Logger::class),
         );
     }
 }

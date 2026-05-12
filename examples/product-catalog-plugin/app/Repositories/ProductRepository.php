@@ -1,16 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ProductCatalogPlugin\Repositories;
 
 use ProductCatalogPlugin\PostTypes\ProductPostType;
-use YamlNs\WppFramework\Repositories\BaseRepository;
 use WP_Post;
 use WP_Query;
+use YamlNs\WppFramework\Repositories\BaseRepository;
 
 final class ProductRepository extends BaseRepository
 {
-    public function __construct(private readonly ProductPostType $postType) {}
+    public function __construct(private readonly ProductPostType $postType)
+    {
+    }
 
     protected function postType(): string
     {

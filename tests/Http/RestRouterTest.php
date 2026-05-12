@@ -1,17 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Tests\Http;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
+use WP_Error;
+use WP_REST_Request;
 use YamlNs\WppFramework\Contracts\Middleware;
 use YamlNs\WppFramework\Http\Requests\FormRequest;
 use YamlNs\WppFramework\Http\RestRouter;
 use YamlNs\WppFramework\Tests\Support\TestCase;
 use YamlNs\WppFramework\Tests\Support\WordPressState;
-use WP_Error;
-use WP_REST_Request;
 
 final class ArrayLogger extends AbstractLogger
 {
@@ -139,7 +140,7 @@ final class RestRouterTest extends TestCase
             ['DELETE', '/items/(?P<id>\d+)'],
         ], array_map(
             static fn (array $route): array => [$route['args']['methods'], $route['route']],
-            WordPressState::$registeredRestRoutes
+            WordPressState::$registeredRestRoutes,
         ));
 
         $this->assertSame('test/v1', WordPressState::$registeredRestRoutes[0]['namespace']);

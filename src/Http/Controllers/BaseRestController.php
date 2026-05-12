@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Controllers;
 
-use YamlNs\WppFramework\Core\PluginContext;
-use YamlNs\WppFramework\Http\Validation\ValidationException;
 use WP_Error;
 use WP_REST_Response;
+use YamlNs\WppFramework\Core\PluginContext;
+use YamlNs\WppFramework\Http\Validation\ValidationException;
 
 abstract class BaseRestController
 {
@@ -35,10 +36,8 @@ abstract class BaseRestController
             'total_pages' => $totalPages,
         ], $status);
 
-        if (method_exists($response, 'header')) {
-            $response->header('X-WP-Total', (string) $total);
-            $response->header('X-WP-TotalPages', (string) $totalPages);
-        }
+        $response->header('X-WP-Total', (string) $total);
+        $response->header('X-WP-TotalPages', (string) $totalPages);
 
         return $response;
     }

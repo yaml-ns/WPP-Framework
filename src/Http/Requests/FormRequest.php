@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Requests;
 
-use YamlNs\WppFramework\Http\Validation\Validator;
 use WP_REST_Request;
+use YamlNs\WppFramework\Http\Validation\Validator;
 
 abstract class FormRequest
 {
@@ -13,7 +14,9 @@ abstract class FormRequest
      */
     private ?array $validated = null;
 
-    public function __construct(protected readonly WP_REST_Request $request) {}
+    public function __construct(protected readonly WP_REST_Request $request)
+    {
+    }
 
     /**
      * @return array<string, string|array<int, string>>
@@ -57,22 +60,6 @@ abstract class FormRequest
      */
     protected function all(): array
     {
-        if (method_exists($this->request, 'get_params')) {
-            $params = $this->request->get_params();
-
-            return is_array($params) ? $params : [];
-        }
-
-        $data = [];
-
-        foreach (array_keys($this->rules()) as $key) {
-            $value = $this->request->get_param((string) $key);
-
-            if ($value !== null) {
-                $data[(string) $key] = $value;
-            }
-        }
-
-        return $data;
+        return $this->request->get_params();
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use YamlNs\WppFramework\Tests\Support\RedirectException;
@@ -10,8 +11,14 @@ if (!class_exists('WP_Error')) {
         public function __construct(
             public string $code = '',
             public string $message = '',
-            public array $data = []
-        ) {}
+            public array $data = [],
+        ) {
+        }
+
+        public function get_error_message(): string
+        {
+            return $this->message;
+        }
     }
 }
 
@@ -24,15 +31,18 @@ if (!class_exists('WP_Post')) {
             public string $post_status = 'publish',
             public string $post_title = '',
             public string $post_content = '',
-            public string $post_excerpt = ''
-        ) {}
+            public string $post_excerpt = '',
+        ) {
+        }
     }
 }
 
 if (!class_exists('WP_REST_Request')) {
     final class WP_REST_Request
     {
-        public function __construct(private array $params = []) {}
+        public function __construct(private array $params = [])
+        {
+        }
 
         public function get_param(string $key): mixed
         {
@@ -43,6 +53,11 @@ if (!class_exists('WP_REST_Request')) {
         {
             return $this->params;
         }
+
+        public function get_header(string $key): mixed
+        {
+            return $this->params[$key] ?? null;
+        }
     }
 }
 
@@ -51,7 +66,9 @@ if (!class_exists('WP_REST_Response')) {
     {
         public array $headers = [];
 
-        public function __construct(public mixed $data = null, public int $status = 200) {}
+        public function __construct(public mixed $data = null, public int $status = 200)
+        {
+        }
 
         public function header(string $key, string $value): void
         {
@@ -130,6 +147,84 @@ if (!function_exists('register_post_type')) {
     }
 }
 
+if (!function_exists('wp_enqueue_style')) {
+    function wp_enqueue_style(string $handle, string $src = '', array $deps = [], string|bool|null $ver = false, string $media = 'all'): void
+    {
+    }
+}
+
+if (!function_exists('wp_enqueue_script')) {
+    function wp_enqueue_script(string $handle, string $src = '', array $deps = [], string|bool|null $ver = false, bool $in_footer = false): void
+    {
+    }
+}
+
+if (!function_exists('wp_localize_script')) {
+    function wp_localize_script(string $handle, string $object_name, array $l10n): bool
+    {
+        return true;
+    }
+}
+
+if (!function_exists('wp_next_scheduled')) {
+    function wp_next_scheduled(string $hook, array $args = []): int|false
+    {
+        return false;
+    }
+}
+
+if (!function_exists('wp_schedule_event')) {
+    function wp_schedule_event(int $timestamp, string $recurrence, string $hook, array $args = [], bool $wp_error = false): bool|WP_Error
+    {
+        return true;
+    }
+}
+
+if (!function_exists('load_plugin_textdomain')) {
+    function load_plugin_textdomain(string $domain, bool $deprecated = false, string $plugin_rel_path = ''): bool
+    {
+        return true;
+    }
+}
+
+if (!function_exists('add_meta_box')) {
+    function add_meta_box(
+        string $id,
+        string $title,
+        callable $callback,
+        string|array|null $screen = null,
+        string $context = 'advanced',
+        string $priority = 'default',
+        mixed $callback_args = null,
+    ): void {
+    }
+}
+
+if (!function_exists('register_setting')) {
+    function register_setting(string $option_group, string $option_name, array $args = []): bool
+    {
+        return true;
+    }
+}
+
+if (!function_exists('add_settings_section')) {
+    function add_settings_section(string $id, string $title, callable $callback, string $page, array $args = []): void
+    {
+    }
+}
+
+if (!function_exists('add_settings_field')) {
+    function add_settings_field(
+        string $id,
+        string $title,
+        callable $callback,
+        string $page,
+        string $section = 'default',
+        array $args = [],
+    ): void {
+    }
+}
+
 if (!function_exists('register_taxonomy')) {
     function register_taxonomy(string $taxonomy, string|array $object_type, array $args = []): object
     {
@@ -151,7 +246,7 @@ if (!function_exists('add_menu_page')) {
         string $menu_slug,
         ?callable $callback = null,
         string $icon_url = '',
-        int|float|null $position = null
+        int|float|null $position = null,
     ): string {
         WordPressState::$adminPages[] = compact('page_title', 'menu_title', 'capability', 'menu_slug', 'callback', 'icon_url', 'position');
 
@@ -167,7 +262,7 @@ if (!function_exists('add_submenu_page')) {
         string $capability,
         string $menu_slug,
         ?callable $callback = null,
-        int|float|null $position = null
+        int|float|null $position = null,
     ): string {
         WordPressState::$adminSubmenuPages[] = compact('parent_slug', 'page_title', 'menu_title', 'capability', 'menu_slug', 'callback', 'position');
 
@@ -197,8 +292,10 @@ if (!function_exists('get_role')) {
             return null;
         }
 
-        return new class($role) {
-            public function __construct(private string $role) {}
+        return new class ($role) {
+            public function __construct(private string $role)
+            {
+            }
 
             public function add_cap(string $capability): void
             {
@@ -307,7 +404,7 @@ if (!function_exists('wp_insert_post')) {
             (string) ($postarr['post_status'] ?? 'draft'),
             (string) ($postarr['post_title'] ?? ''),
             (string) ($postarr['post_content'] ?? ''),
-            (string) ($postarr['post_excerpt'] ?? '')
+            (string) ($postarr['post_excerpt'] ?? ''),
         );
 
         return $id;
@@ -330,7 +427,7 @@ if (!function_exists('wp_update_post')) {
             (string) ($postarr['post_status'] ?? $post->post_status),
             (string) ($postarr['post_title'] ?? $post->post_title),
             (string) ($postarr['post_content'] ?? $post->post_content),
-            (string) ($postarr['post_excerpt'] ?? $post->post_excerpt)
+            (string) ($postarr['post_excerpt'] ?? $post->post_excerpt),
         );
 
         return $id;
@@ -377,7 +474,7 @@ if (!function_exists('wp_set_object_terms')) {
         if ($append) {
             WordPressState::$objectTerms[$object_id][$taxonomy] = array_merge(
                 WordPressState::$objectTerms[$object_id][$taxonomy] ?? [],
-                $values
+                $values,
             );
             return $values;
         }
@@ -389,7 +486,9 @@ if (!function_exists('wp_set_object_terms')) {
 }
 
 if (!function_exists('update_post_caches')) {
-    function update_post_caches(array &$posts, string $post_type = 'post', bool $update_term_cache = true, bool $update_meta_cache = true): void {}
+    function update_post_caches(array &$posts, string $post_type = 'post', bool $update_term_cache = true, bool $update_meta_cache = true): void
+    {
+    }
 }
 
 if (!function_exists('get_the_title')) {
@@ -437,6 +536,13 @@ if (!function_exists('sanitize_text_field')) {
     function sanitize_text_field(string $value): string
     {
         return trim(strip_tags($value));
+    }
+}
+
+if (!function_exists('absint')) {
+    function absint(mixed $value): int
+    {
+        return abs((int) $value);
     }
 }
 
@@ -543,6 +649,13 @@ if (!function_exists('current_user_can')) {
     }
 }
 
+if (!function_exists('is_user_logged_in')) {
+    function is_user_logged_in(): bool
+    {
+        return WordPressState::$currentUserId > 0;
+    }
+}
+
 if (!function_exists('get_current_user_id')) {
     function get_current_user_id(): int
     {
@@ -561,6 +674,13 @@ if (!function_exists('wp_nonce_field')) {
     function wp_nonce_field(string $action, string $name): void
     {
         echo '<input type="hidden" name="' . $name . '" value="valid">';
+    }
+}
+
+if (!function_exists('wp_create_nonce')) {
+    function wp_create_nonce(string $action): string
+    {
+        return 'valid';
     }
 }
 

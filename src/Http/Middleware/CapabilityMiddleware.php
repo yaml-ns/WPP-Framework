@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Middleware;
 
-use YamlNs\WppFramework\Contracts\Middleware;
 use WP_Error;
 use WP_REST_Request;
+use YamlNs\WppFramework\Contracts\Middleware;
 
 /**
  * Checks that the current user has a WordPress capability.
@@ -20,7 +21,9 @@ use WP_REST_Request;
  */
 final class CapabilityMiddleware implements Middleware
 {
-    public function __construct(private readonly string $capability = 'read') {}
+    public function __construct(private readonly string $capability = 'read')
+    {
+    }
 
     public function handle(WP_REST_Request $request): bool|WP_Error
     {

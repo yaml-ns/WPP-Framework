@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Tests\Providers;
@@ -17,7 +18,9 @@ final class DummyRestController implements RestController
     }
 }
 
-final class InvalidRestController {}
+final class InvalidRestController
+{
+}
 
 final class RestControllerServiceProviderTest extends TestCase
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Core;
@@ -6,8 +7,8 @@ namespace YamlNs\WppFramework\Core;
 use Closure;
 use ReflectionClass;
 use ReflectionNamedType;
-use YamlNs\WppFramework\Http\Requests\FormRequest;
 use WP_REST_Request;
+use YamlNs\WppFramework\Http\Requests\FormRequest;
 
 final class Container
 {
@@ -228,7 +229,7 @@ final class Container
 
             if ($type instanceof \ReflectionUnionType) {
                 throw new \RuntimeException(
-                    "Union types are not supported for autowiring: \${$name} in callback"
+                    "Union types are not supported for autowiring: \${$name} in callback",
                 );
             }
 
@@ -296,7 +297,7 @@ final class Container
 
                 if ($type instanceof \ReflectionUnionType) {
                     throw new \RuntimeException(
-                        "Union types are not supported for autowiring: \${$parameter->getName()} in {$class}"
+                        "Union types are not supported for autowiring: \${$parameter->getName()} in {$class}",
                     );
                 }
 

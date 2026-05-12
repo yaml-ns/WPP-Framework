@@ -1,15 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http;
 
 use Psr\Log\LoggerInterface;
+use WP_Error;
+use WP_REST_Request;
 use YamlNs\WppFramework\Contracts\Middleware;
 use YamlNs\WppFramework\Core\Container;
 use YamlNs\WppFramework\Core\PluginContext;
 use YamlNs\WppFramework\Http\Validation\ValidationException;
-use WP_Error;
-use WP_REST_Request;
 
 final class RestRouter
 {
@@ -20,7 +21,9 @@ final class RestRouter
 
     private bool $registered = false;
 
-    public function __construct(private Container $container) {}
+    public function __construct(private Container $container)
+    {
+    }
 
     /**
      * @param callable|array{0: string|object, 1: string} $handler

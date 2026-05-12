@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -23,7 +24,7 @@ final class AdminServiceProvider extends ServiceProvider
     {
         $this->container->instance(
             FrameworkAdminPage::class,
-            new FrameworkAdminPage($this->context)
+            new FrameworkAdminPage($this->context),
         );
     }
 

@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 $slug = sanitize_key((string) $resource['slug']);
 $paginationArgs = array_filter(
     array_map('strval', (array) $activeFilters),
-    static fn (string $value): bool => $value !== ''
+    static fn (string $value): bool => $value !== '',
 );
 ?>
 

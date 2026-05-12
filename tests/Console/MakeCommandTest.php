@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Tests\Console;
@@ -142,7 +143,7 @@ final class MakeCommandTest extends TestCase
 
         foreach (new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
+            \RecursiveIteratorIterator::CHILD_FIRST,
         ) as $path) {
             $path->isDir() ? rmdir($path->getPathname()) : unlink($path->getPathname());
         }

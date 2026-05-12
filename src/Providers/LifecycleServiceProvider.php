@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -17,6 +18,10 @@ final class LifecycleServiceProvider extends ServiceProvider
     public function __construct(Container $container, array $lifecycle = [])
     {
         parent::__construct($container);
+
+        if ($lifecycle !== []) {
+            // Migrations run during activation; this provider keeps the config accepted at boot.
+        }
     }
 
     public function boot(): void

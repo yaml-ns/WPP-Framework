@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -27,7 +28,7 @@ final class ShortcodeServiceProvider extends ServiceProvider
                 [
                     'atts' => is_array($atts) ? $atts : [],
                     'content' => $content,
-                ]
+                ],
             ));
         }
     }

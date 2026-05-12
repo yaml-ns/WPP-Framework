@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Tests\Http;
 
+use PHPUnit\Framework\TestCase;
+use WP_Error;
 use YamlNs\WppFramework\Http\Controllers\BaseRestController;
 use YamlNs\WppFramework\Http\Validation\ValidationException;
-use PHPUnit\Framework\TestCase;
 use YamlNs\WppFramework\Tests\Support\WordPressState;
-use WP_Error;
 
 final class TestRestController extends BaseRestController
 {
@@ -32,7 +33,9 @@ final class TestAllowPolicy
 
 final class TestAuthRestController extends BaseRestController
 {
-    public function __construct(protected readonly object $policy) {}
+    public function __construct(protected readonly object $policy)
+    {
+    }
 
     public function exposeAuthorize(string $ability, mixed ...$arguments): ?WP_Error
     {
@@ -79,7 +82,7 @@ final class BaseRestControllerTest extends TestCase
     {
         $result = (new TestAuthRestController(new TestAllowPolicy()))->exposeAuthorize(
             'update',
-            new \WP_Post(10)
+            new \WP_Post(10),
         );
 
         $this->assertNull($result);
@@ -89,7 +92,7 @@ final class BaseRestControllerTest extends TestCase
     {
         $result = (new TestAuthRestController(new TestAllowPolicy()))->exposeAuthorize(
             'update',
-            new \WP_Post(11)
+            new \WP_Post(11),
         );
 
         $this->assertInstanceOf(WP_Error::class, $result);

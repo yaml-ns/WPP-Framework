@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Controllers;
 
+use WP_REST_Response;
 use YamlNs\WppFramework\Contracts\RestController;
 use YamlNs\WppFramework\Core\PluginContext;
 use YamlNs\WppFramework\Http\Middleware\AdminMiddleware;
 use YamlNs\WppFramework\Http\RestRouter;
-use WP_REST_Response;
 
 final class ExampleProtectedController extends BaseRestController implements RestController
 {
@@ -22,7 +23,7 @@ final class ExampleProtectedController extends BaseRestController implements Res
             $this->namespace,
             '/admin-example',
             [$this, 'index'],
-            [AdminMiddleware::class]
+            [AdminMiddleware::class],
         );
     }
 

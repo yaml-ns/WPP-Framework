@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Tests\Core;
@@ -10,47 +11,69 @@ use YamlNs\WppFramework\Core\Container;
 // Fixture classes kept here so these tests stay self-contained.
 // ---------------------------------------------------------------------------
 
-class SimpleService {}
+class SimpleService
+{
+}
 
-interface PaymentGateway {}
+interface PaymentGateway
+{
+}
 
-class StripeGateway implements PaymentGateway {}
+class StripeGateway implements PaymentGateway
+{
+}
 
-class PaypalGateway implements PaymentGateway {}
+class PaypalGateway implements PaymentGateway
+{
+}
 
 class CheckoutService
 {
-    public function __construct(public PaymentGateway $gateway) {}
+    public function __construct(public PaymentGateway $gateway)
+    {
+    }
 }
 
 class DependentService
 {
-    public function __construct(public SimpleService $simple) {}
+    public function __construct(public SimpleService $simple)
+    {
+    }
 }
 
 class ServiceWithDefault
 {
-    public function __construct(public string $name = 'default') {}
+    public function __construct(public string $name = 'default')
+    {
+    }
 }
 
 class CircularA
 {
-    public function __construct(CircularB $b) {}
+    public function __construct(CircularB $b)
+    {
+    }
 }
 
 class CircularB
 {
-    public function __construct(CircularA $a) {}
+    public function __construct(CircularA $a)
+    {
+    }
 }
 
 class ServiceWithUnion
 {
-    public function __construct(SimpleService|DependentService $dep) {}
+    public function __construct(SimpleService|DependentService $dep)
+    {
+    }
 }
 
 class ServiceWithRequiredScalar
 {
-    public function __construct(public string $name) {}
+    public function __construct(public string $name)
+    {
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -161,7 +184,7 @@ final class ContainerTest extends TestCase
 
         $this->assertSame(
             $this->container->get(SimpleService::class),
-            $this->container->get('simple')
+            $this->container->get('simple'),
         );
     }
 
@@ -258,8 +281,10 @@ final class ContainerTest extends TestCase
         $service = new SimpleService();
 
         $result = $this->container->call(
-            function (SimpleService $s): SimpleService { return $s; },
-            ['s' => $service]
+            function (SimpleService $s): SimpleService {
+                return $s;
+            },
+            ['s' => $service],
         );
 
         $this->assertSame($service, $result);
@@ -270,8 +295,10 @@ final class ContainerTest extends TestCase
         $service = new SimpleService();
 
         $result = $this->container->call(
-            function (SimpleService $s): SimpleService { return $s; },
-            [SimpleService::class => $service]
+            function (SimpleService $s): SimpleService {
+                return $s;
+            },
+            [SimpleService::class => $service],
         );
 
         $this->assertSame($service, $result);
@@ -282,7 +309,8 @@ final class ContainerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessageMatches('/Union types are not supported/');
 
-        $this->container->call(function (SimpleService|DependentService $service): void {});
+        $this->container->call(function (SimpleService|DependentService $service): void {
+        });
     }
 
     public function test_call_without_type_or_default_throws_explicit_error(): void
@@ -290,7 +318,8 @@ final class ContainerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Cannot resolve parameter 'value'");
 
-        $this->container->call(function ($value): void {});
+        $this->container->call(function ($value): void {
+        });
     }
 
     public function test_required_scalar_constructor_dependency_throws_explicit_error(): void

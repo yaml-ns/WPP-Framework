@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -37,7 +38,7 @@ final class CronServiceProvider extends ServiceProvider
                     $event['timestamp'] ?? time(),
                     $event['recurrence'] ?? 'hourly',
                     (string) $event['hook'],
-                    $args
+                    $args,
                 );
             }
         }
@@ -51,7 +52,7 @@ final class CronServiceProvider extends ServiceProvider
         foreach ($cron['events'] ?? [] as $event) {
             wp_clear_scheduled_hook(
                 (string) $event['hook'],
-                $event['args'] ?? []
+                $event['args'] ?? [],
             );
         }
     }

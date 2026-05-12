@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Support;
@@ -33,7 +34,7 @@ final class Logger implements LoggerInterface
         private readonly PluginContext $context,
         private readonly bool $enabled = true,
         private readonly string $minLevel = LogLevel::DEBUG,
-        ?callable $handler = null
+        ?callable $handler = null,
     ) {
         $this->handler = Closure::fromCallable($handler ?? 'error_log');
     }
@@ -118,7 +119,7 @@ final class Logger implements LoggerInterface
             $this->context->slug(),
             strtoupper($level),
             $this->interpolate((string) $message, $context),
-            $this->contextSuffix($context)
+            $this->contextSuffix($context),
         ));
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Core;
@@ -44,7 +45,7 @@ final class Plugin
             if ($existing->context()->fingerprint() !== $context->fingerprint()) {
                 throw new \RuntimeException(sprintf(
                     'Plugin context collision detected for slug [%s]. Use a unique slug or plugin file.',
-                    $context->slug()
+                    $context->slug(),
                 ));
             }
 

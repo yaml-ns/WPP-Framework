@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -67,7 +68,7 @@ final class MetaBoxServiceProvider extends ServiceProvider
                 },
                 $box['screen'],
                 $box['context'] ?? 'normal',
-                $box['priority'] ?? 'default'
+                $box['priority'] ?? 'default',
             );
         }
     }

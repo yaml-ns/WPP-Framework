@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework;
@@ -10,9 +11,9 @@ use YamlNs\WppFramework\Core\Deactivator;
 use YamlNs\WppFramework\Core\Plugin;
 use YamlNs\WppFramework\Core\PluginContext;
 use YamlNs\WppFramework\Core\Uninstaller;
-use YamlNs\WppFramework\Providers\AdminPageServiceProvider;
 use YamlNs\WppFramework\Providers\AdminCrudServiceProvider;
 use YamlNs\WppFramework\Providers\AdminFormServiceProvider;
+use YamlNs\WppFramework\Providers\AdminPageServiceProvider;
 use YamlNs\WppFramework\Providers\AjaxServiceProvider;
 use YamlNs\WppFramework\Providers\AssetServiceProvider;
 use YamlNs\WppFramework\Providers\CapabilityServiceProvider;
@@ -74,7 +75,7 @@ final class Wpp
         $providerDefinitions = array_merge(
             self::configuredProviders($config),
             $config['providers'] ?? [],
-            self::moduleProviders($config['modules'] ?? [])
+            self::moduleProviders($config['modules'] ?? []),
         );
 
         if ($plugin->isBooted()) {

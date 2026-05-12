@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Middleware;
 
-use YamlNs\WppFramework\Contracts\Middleware;
 use WP_Error;
 use WP_REST_Request;
+use YamlNs\WppFramework\Contracts\Middleware;
 
 /**
  * Explicitly verifies the WordPress REST nonce (X-WP-Nonce: wp_rest).

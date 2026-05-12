@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Product Catalog Plugin
  * Description: Example plugin that creates and displays a product catalog.

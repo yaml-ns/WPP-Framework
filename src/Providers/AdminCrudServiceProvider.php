@@ -1,8 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
 
+use WP_Error;
+use WP_Post;
 use YamlNs\WppFramework\Admin\AdminForm;
 use YamlNs\WppFramework\Core\Container;
 use YamlNs\WppFramework\Fields\FieldSanitizer;
@@ -10,8 +13,6 @@ use YamlNs\WppFramework\Http\Validation\ValidationException;
 use YamlNs\WppFramework\Http\Validation\Validator;
 use YamlNs\WppFramework\Repositories\BaseRepository;
 use YamlNs\WppFramework\View\ViewRenderer;
-use WP_Error;
-use WP_Post;
 
 final class AdminCrudServiceProvider extends ServiceProvider
 {
@@ -43,10 +44,18 @@ final class AdminCrudServiceProvider extends ServiceProvider
                 throw new \RuntimeException('Admin CRUD resource [slug] is required.');
             }
 
-            add_action("admin_post_{$slug}_store", fn (): mixed => $this->handleStore($resource));
-            add_action("admin_post_{$slug}_update", fn (): mixed => $this->handleUpdate($resource));
-            add_action("admin_post_{$slug}_delete", fn (): mixed => $this->handleDelete($resource));
-            add_action("admin_post_{$slug}_bulk", fn (): mixed => $this->handleBulk($resource));
+            add_action("admin_post_{$slug}_store", function () use ($resource): void {
+                $this->handleStore($resource);
+            });
+            add_action("admin_post_{$slug}_update", function () use ($resource): void {
+                $this->handleUpdate($resource);
+            });
+            add_action("admin_post_{$slug}_delete", function () use ($resource): void {
+                $this->handleDelete($resource);
+            });
+            add_action("admin_post_{$slug}_bulk", function () use ($resource): void {
+                $this->handleBulk($resource);
+            });
         }
     }
 
@@ -59,7 +68,9 @@ final class AdminCrudServiceProvider extends ServiceProvider
         $capability = (string) ($resource['capability'] ?? 'manage_options');
         $menuTitle = (string) ($resource['menu_title'] ?? $resource['label'] ?? $slug);
         $pageTitle = (string) ($resource['page_title'] ?? $menuTitle);
-        $callback = fn (): mixed => $this->render($resource);
+        $callback = function () use ($resource): void {
+            $this->render($resource);
+        };
 
         if (isset($resource['parent_slug'])) {
             add_submenu_page(
@@ -69,7 +80,7 @@ final class AdminCrudServiceProvider extends ServiceProvider
                 $capability,
                 $slug,
                 $callback,
-                $resource['position'] ?? null
+                $resource['position'] ?? null,
             );
 
             return;
@@ -82,20 +93,20 @@ final class AdminCrudServiceProvider extends ServiceProvider
             $slug,
             $callback,
             $resource['icon'] ?? 'dashicons-admin-post',
-            $resource['position'] ?? null
+            $resource['position'] ?? null,
         );
     }
 
     /**
      * @param array<string, mixed> $resource
      */
-    private function render(array $resource): mixed
+    private function render(array $resource): void
     {
         $this->ensureCapability($resource);
 
         $action = sanitize_key((string) ($_GET['action'] ?? 'index'));
 
-        return match ($action) {
+        match ($action) {
             'create' => $this->renderForm($resource, null),
             'edit' => $this->renderForm($resource, $this->findPostFromQuery($resource)),
             default => $this->renderIndex($resource),
@@ -575,10 +586,6 @@ final class AdminCrudServiceProvider extends ServiceProvider
 
     private function errorMessage(WP_Error $error): string
     {
-        if (method_exists($error, 'get_error_message')) {
-            return (string) $error->get_error_message();
-        }
-
-        return $error->message ?? 'Forbidden.';
+        return (string) $error->get_error_message();
     }
 }

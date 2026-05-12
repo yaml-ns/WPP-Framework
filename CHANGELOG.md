@@ -9,6 +9,8 @@ The project follows Semantic Versioning. Versions before `1.0.0` may still adjus
 ### Added
 
 - CI definitions for GitHub Actions and GitLab CI.
+- PHPStan configuration and Composer scripts.
+- PHP CS Fixer configuration and Composer scripts.
 - Release checklist in `RELEASE.md`.
 
 ## [0.9.0] - 2026-05-12

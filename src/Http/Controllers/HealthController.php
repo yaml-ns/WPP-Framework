@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Http\Controllers;
 
+use WP_REST_Response;
 use YamlNs\WppFramework\Contracts\RestController;
 use YamlNs\WppFramework\Core\PluginContext;
 use YamlNs\WppFramework\Http\RestRouter;
-use WP_REST_Response;
 
 final class HealthController extends BaseRestController implements RestController
 {
@@ -20,7 +21,7 @@ final class HealthController extends BaseRestController implements RestControlle
         $this->router->get(
             $this->namespace,
             '/health',
-            [$this, 'health']
+            [$this, 'health'],
         );
     }
 

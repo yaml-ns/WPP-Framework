@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -39,7 +40,7 @@ final class RestControllerServiceProvider extends ServiceProvider
             throw new \RuntimeException(sprintf(
                 'REST controller [%s] must implement %s.',
                 $controller,
-                RestController::class
+                RestController::class,
             ));
         }
 

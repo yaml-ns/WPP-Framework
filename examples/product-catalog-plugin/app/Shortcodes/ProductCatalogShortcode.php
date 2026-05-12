@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ProductCatalogPlugin\Shortcodes;
@@ -13,7 +14,7 @@ final class ProductCatalogShortcode extends BaseShortcode
     public function __construct(
         private readonly ProductRepository $products,
         private readonly OptionRepository $options,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
     ) {
         parent::__construct($viewRenderer);
     }

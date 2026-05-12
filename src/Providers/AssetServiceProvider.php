@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -18,7 +19,7 @@ final class AssetServiceProvider extends ServiceProvider
      */
     public function __construct(
         Container $container,
-        private readonly array $assets = []
+        private readonly array $assets = [],
     ) {
         parent::__construct($container);
         $this->context = $container->get(PluginContext::class);
@@ -27,11 +28,15 @@ final class AssetServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (isset($this->assets['admin'])) {
-            add_action('admin_enqueue_scripts', fn (?string $hook = null): mixed => $this->enqueueGroup($this->assets['admin'], $hook));
+            add_action('admin_enqueue_scripts', function (?string $hook = null): void {
+                $this->enqueueGroup($this->assets['admin'], $hook);
+            });
         }
 
         if (isset($this->assets['frontend'])) {
-            add_action('wp_enqueue_scripts', fn (): mixed => $this->enqueueGroup($this->assets['frontend']));
+            add_action('wp_enqueue_scripts', function (): void {
+                $this->enqueueGroup($this->assets['frontend']);
+            });
         }
     }
 
@@ -67,7 +72,7 @@ final class AssetServiceProvider extends ServiceProvider
             $this->assetUrl((string) ($style['src'] ?? '')),
             $style['deps'] ?? [],
             $style['version'] ?? $this->context->version(),
-            $style['media'] ?? 'all'
+            $style['media'] ?? 'all',
         );
     }
 
@@ -83,14 +88,14 @@ final class AssetServiceProvider extends ServiceProvider
             $this->assetUrl((string) ($script['src'] ?? '')),
             $script['deps'] ?? [],
             $script['version'] ?? $this->context->version(),
-            $script['args'] ?? ($script['in_footer'] ?? true)
+            $script['args'] ?? ($script['in_footer'] ?? true),
         );
 
         if (isset($script['localize'])) {
             wp_localize_script(
                 (string) $handle,
                 (string) $script['localize']['object_name'],
-                $script['localize']['data'] ?? []
+                $script['localize']['data'] ?? [],
             );
         }
     }

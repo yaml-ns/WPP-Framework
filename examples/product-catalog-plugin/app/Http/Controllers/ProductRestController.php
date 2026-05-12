@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ProductCatalogPlugin\Http\Controllers;
@@ -8,19 +9,20 @@ use ProductCatalogPlugin\Http\Requests\StoreProductRequest;
 use ProductCatalogPlugin\Http\Requests\UpdateProductRequest;
 use ProductCatalogPlugin\Policies\ProductPolicy;
 use ProductCatalogPlugin\Repositories\ProductRepository;
-use YamlNs\WppFramework\Http\Controllers\BaseRestController;
-use YamlNs\WppFramework\Support\OptionRepository;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
+use YamlNs\WppFramework\Http\Controllers\BaseRestController;
+use YamlNs\WppFramework\Support\OptionRepository;
 
 final class ProductRestController extends BaseRestController
 {
     public function __construct(
         private readonly ProductRepository $products,
         protected readonly ProductPolicy $policy,
-        private readonly OptionRepository $options
-    ) {}
+        private readonly OptionRepository $options,
+    ) {
+    }
 
     public function index(ProductIndexRequest $request): WP_REST_Response|WP_Error
     {

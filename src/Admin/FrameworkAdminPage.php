@@ -14,7 +14,7 @@ final class FrameworkAdminPage extends BaseAdminPage
             $this->context->slug(),
             [$this, 'render'],
             'dashicons-admin-generic',
-            58
+            58,
         );
     }
 

@@ -13,4 +13,6 @@ phpunit:
   script:
     - composer validate --strict
     - composer install --no-interaction --no-progress --prefer-dist
-    - vendor/bin/phpunit
+    - composer cs:check
+    - composer analyse
+    - composer test

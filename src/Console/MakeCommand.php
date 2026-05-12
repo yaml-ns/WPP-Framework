@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Console;
@@ -395,7 +396,7 @@ PHP;
         $status = 0;
 
         $files = [
-            "config/admin-crud.php" => $this->adminCrudConfig($namespace, $name),
+            'config/admin-crud.php' => $this->adminCrudConfig($namespace, $name),
             "resources/views/admin/{$kebab}/index.php" => $this->adminCrudIndexView($name),
             "resources/views/admin/{$kebab}/form.php" => $this->adminCrudFormView($name),
         ];

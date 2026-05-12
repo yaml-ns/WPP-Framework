@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Repositories;
@@ -168,7 +169,7 @@ abstract class BaseRepository
 
         $deleted = wp_delete_post($target->ID, $force);
 
-        return $deleted instanceof WP_Post || $deleted === true;
+        return $deleted instanceof WP_Post;
     }
 
     /**
@@ -269,10 +270,6 @@ abstract class BaseRepository
 
     private function wpErrorMessage(WP_Error $error): string
     {
-        if (method_exists($error, 'get_error_message')) {
-            return (string) $error->get_error_message();
-        }
-
-        return $error->message ?? 'WordPress operation failed.';
+        return (string) $error->get_error_message();
     }
 }

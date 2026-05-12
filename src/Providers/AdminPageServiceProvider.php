@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -50,7 +51,7 @@ final class AdminPageServiceProvider extends ServiceProvider
                 (string) ($page['capability'] ?? 'manage_options'),
                 (string) ($page['slug'] ?? $this->context->slug()),
                 $callback,
-                $page['position'] ?? null
+                $page['position'] ?? null,
             );
 
             return;
@@ -63,7 +64,7 @@ final class AdminPageServiceProvider extends ServiceProvider
             (string) ($page['slug'] ?? $this->context->slug()),
             $callback,
             $page['icon'] ?? 'dashicons-admin-generic',
-            $page['position'] ?? null
+            $page['position'] ?? null,
         );
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -24,7 +25,7 @@ final class I18nServiceProvider extends ServiceProvider
         load_plugin_textdomain(
             (string) ($this->i18n['text_domain'] ?? $this->context->textDomain()),
             false,
-            $this->relativeLanguagePath()
+            $this->relativeLanguagePath(),
         );
     }
 

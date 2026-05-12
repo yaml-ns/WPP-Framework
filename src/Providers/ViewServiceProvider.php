@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YamlNs\WppFramework\Providers;
@@ -12,7 +13,7 @@ final class ViewServiceProvider extends ServiceProvider
     {
         $this->container->singleton(
             ViewRenderer::class,
-            fn () => new ViewRenderer($this->container->get(PluginContext::class))
+            fn () => new ViewRenderer($this->container->get(PluginContext::class)),
         );
     }
 }
