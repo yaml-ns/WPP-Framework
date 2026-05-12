@@ -2,16 +2,20 @@
 
 declare(strict_types=1);
 
+$directories = array_values(array_filter([
+    __DIR__ . '/src',
+    __DIR__ . '/tests',
+    __DIR__ . '/examples',
+    __DIR__ . '/config',
+], 'is_dir'));
+
+$files = array_values(array_filter([
+    __DIR__ . '/bin/wpp',
+], 'is_file'));
+
 $finder = PhpCsFixer\Finder::create()
-    ->in([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
-        __DIR__ . '/examples',
-        __DIR__ . '/config',
-    ])
-    ->append([
-        __DIR__ . '/bin/wpp',
-    ])
+    ->in($directories)
+    ->append($files)
     ->exclude('vendor');
 
 return (new PhpCsFixer\Config())
